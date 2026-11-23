@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="it10">
+<meta name="version" content="2026.11">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Binoxxo">
+<title>Binoxxo – it10 (v2026.11)</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header class="app-header">
+    <h1 class="top-meta-heading">Autor: it10 | Version: 2026.11</h1>
+    <div class="header-row">
+      <h2>Binoxxo</h2>
+      <div class="header-actions no-print">
+        <button class="icon-btn" onclick="printPuzzle()" title="Rätsel drucken">🖨️ Drucken</button>
+        <button class="icon-btn" onclick="openStatsModal()" title="Statistik anzeigen">📊 Statistik</button>
+        <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Farbschema wechseln">🌙 Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <p class="subtitle no-print">Maus: Klick / Rechtsklick | Tastatur: Pfeile + X / O / Entf | Strg+Z: Zurück</p>
+  <p id="printMeta" class="print-only"></p>
+
+  <div class="stats-bar no-print">
+    <span>⏱️ Zeit: <span id="timerDisplay">00:00</span></span>
+    <span>🏆 Bestzeit: <span id="bestTimeDisplay">--:--</span></span>
+  </div>
+
+  <div class="controls no-print">
+    <select id="sizeSelect" aria-label="Spielfeldgröße" onchange="startNewGameConfirmed()">
+      <option value="6" selected>6 × 6</option>
+      <option value="8">8 × 8</option>
+      <option value="10">10 × 10</option>
+    </select>
+    <select id="diffSelect" aria-label="Schwierigkeitsgrad" onchange="startNewGameConfirmed()">
+      <option value="easy">Leicht</option>
+      <option value="medium" selected>Mittel</option>
+      <option value="hard">Schwer</option>
+    </select>
+    <button class="primary" onclick="startNewGameConfirmed()">Neu</button>
+    <button id="undoBtn" onclick="undoMove()" disabled title="Letzten Zug rückgängig machen">↩️</button>
+    <button onclick="giveHint()" title="Ein Feld aufdecken">💡 Tipp</button>
+    <button onclick="checkBoard(true)">Prüfen</button>
+    <button onclick="resetBoard()">Reset</button>
+  </div>
+
+  <div class="board-wrapper">
+    <div id="board" class="board"></div>
+  </div>
+  <div id="status" class="no-print"></div>
+
+  <div class="rules">
+    <strong>Spielregeln &amp; Zähler:</strong>
+    <ul>
+      <li>Die Zähler rechts und unten zeigen, wie viele <strong>X</strong> und <strong>O</strong> in der Reihe noch fehlen.</li>
+      <li>Maximal <strong>zwei gleiche Zeichen</strong> direkt neben- oder übereinander.</li>
+      <li>Alle Zeilen sind unterschiedlich; alle Spalten sind unterschiedlich.</li>
+    </ul>
+  </div>
+
+  <footer class="app-footer">
+    Autor: <strong>it10</strong> &middot; Version <strong>2026.11</strong>
+  </footer>
+</div>
+
+<!-- Statistik Modal -->
+<div id="statsModal" class="modal-backdrop no-print" onclick="if(event.target===this) closeStatsModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>📊 Deine Statistik</h2>
+      <button class="icon-btn" onclick="closeStatsModal()">✕</button>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <span class="stat-val" id="stPlayed">0</span>
+        <span class="stat-lbl">Gespielt</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val" id="stSolved">0</span>
+        <span class="stat-lbl">Gelöst</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val" id="stStreak">0</span>
+        <span class="stat-lbl">Serie</span>
+      </div>
+    </div>
+
+    <table class="best-table">
+      <thead>
+        <tr>
+          <th>Größe</th>
+          <th>Leicht</th>
+          <th>Mittel</th>
+          <th>Schwer</th>
+        </tr>
+      </thead>
+      <tbody id="bestTimesBody"></tbody>
+    </table>
+
+    <div class="modal-footer">
+      <button onclick="clearStats()" class="danger-btn">Daten löschen</button>
+      <button class="primary" onclick="closeStatsModal()">Schließen</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

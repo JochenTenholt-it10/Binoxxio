@@ -1,0 +1,23 @@
+{
+  "name": "Binoxxo – Logikrätsel (it10)",
+  "short_name": "Binoxxo",
+  "description": "Logikrätsel mit X und O von it10 (Version 2026.11)",
+  "version": "2026.11",
+  "author": "it10",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f6f9",
+  "theme_color": "#0f172a",
+  "lang": "de",
+  "categories": ["games", "puzzle"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
